@@ -1,71 +1,65 @@
 # mathematical-symbols README
 
-This is the README for your extension "mathematical-symbols". After writing up a brief description, we recommend including the following sections.
+Mathematical Symbols is an extension that supports the input of mathematical symbols that exist in Unicode.
 
-## Features
+Type the command after `\` and then press the trigger key (tab/space) to perform the conversion (e.g. `\alpha<tab>` -> `α`)
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+The command definitions are similar to LaTeX, but include many abbreviations (e.g. `\Ga<tab>` -> `Γ`) and ASCII art-based commands (e.g. `=>` -> `⇒`).
 
-For example if there is an image subfolder under your extension project workspace:
+In exchange, the range of symbols available is limited to those considered frequently used.
 
-\!\[feature X\]\(images/feature-x.png\)
+Refer to `src/data.ts` for a complete list of commands.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Batch Conversion
 
-## Requirements
+The characters `_`, `^`, `;`, and `,` have special effects.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- `\_a`, `\a_`, and `\_a_` all represent the subscript `ₐ`.
+- `\^a`, `\a^`, and `\^a^` all represent the superscript `ᵃ`.
 
-## Extension Settings
+Using `^` and `_`, multiple characters can be converted in one go, e.g., `\^abc` -> `ᵃᵇᶜ`.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+Since Unicode only supports a limited set of superscript and subscript characters, some letters cannot be converted.
 
-For example:
+Commands in the form `\{style};{sequence}` allow you to specify styles (e.g., bold, italic, fraktur) and apply them to the sequence.
 
-This extension contributes the following settings:
+For example: `\b;abc<tab>` -> `𝐚𝐛𝐜`.
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+The following table lists supported styles:
 
-## Known Issues
+| style | prefix | example |
+| ----- | ---- | --------- |
+| bold  | b | 𝐚𝐛𝐜 |
+| italic | i | 𝑎𝑏𝑐 |
+| blackboard | bb, B | 𝕒𝕓𝕔 |
+| calligraphy | c | 𝒶𝒷𝒸 |
+| fraktur | f | 𝔞𝔟𝔠 |
+| serif | s | 𝖺𝖻𝖼 |
+| mono-space | t | 𝚊𝚋𝚌 |
+| superscript | ^, u | ᵃᵇᶜ |
+| subscript | _, d | ₁₂₃ |
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Some styles can be combined, such as `\bi;abc` -> `𝒂𝒃𝒄` (bold + italic).
+If a combination is not possible, the first style takes precedence.
 
-## Release Notes
+Commands can be chained using `,` for batch conversion.
 
-Users appreciate release notes as you update your extension.
+For example: `\alpha,b;foo,_x,gamma<tab>` -> `α𝐟𝐨𝐨ₓγ`.
 
-### 1.0.0
+The behavior of batch conversion changes depending on the trigger key:
 
-Initial release of ...
+When triggered with a space, spaces are inserted between the converted characters.
 
-### 1.0.1
+## Negation
 
-Fixed issue #.
+To negate a character, input `\!a` or `\a!`.
+This uses Unicode combining marks to produce `a̸`.
 
-### 1.1.0
+If precomposed Unicode characters exist, they take priority:
 
-Added features X, Y, and Z.
+- `\!=` -> `≠`
+- `\!in` -> `∉`
 
----
+## LICENSE
 
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+MIT

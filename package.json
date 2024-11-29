@@ -1,21 +1,88 @@
 {
   "name": "mathematical-symbols",
   "displayName": "Mathematical Symbols",
-  "description": "Insertion support of 𝔘𝐧𝑖𝒸𝕠𝖽𝚎 symbols",
+  "description": "Insertion support of mathematical symbols ∈ 𝕌nicode",
   "version": "0.0.1",
+  "license": "MIT",
+  "homepage": "https://github.com/ho-oto/mathematical-symbols",
   "engines": {
     "vscode": "^1.95.0"
   },
   "categories": [
-    "Other"
+    "Snippets"
   ],
-  "activationEvents": [],
+  "keywords": [
+    "unicode",
+    "math",
+    "symbols",
+    "shortcuts",
+    "snippets"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "icon": "./icon.png",
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "mathematical-symbols.helloWorld",
-        "title": "Hello World"
+        "command": "mathematical-symbols.flush_cache",
+        "title": "Clear the symbol table cache",
+        "category": "Mathematical Symbols"
+      },
+      {
+        "command": "mathematical-symbols.enable",
+        "title": "Enable Mathematical Symbols",
+        "category": "Mathematical Symbols"
+      },
+      {
+        "command": "mathematical-symbols.disable",
+        "title": "Disable Mathematical Symbols",
+        "category": "Mathematical Symbols"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "mathematical-symbols.commit_tab",
+        "key": "tab",
+        "when": "editorTextFocus && !inlineSuggestionVisible && !suggestWidgetVisible && !editorTabMovesFocus && !inSnippetMode && !hasSnippetCompletions && !editorTabMovesFocus && !editorReadonly"
+      },
+      {
+        "command": "mathematical-symbols.commit_space",
+        "key": "space",
+        "when": "editorTextFocus && !inlineSuggestionVisible && !suggestWidgetVisible && !editorTabMovesFocus && !inSnippetMode && !hasSnippetCompletions && !editorTabMovesFocus && !editorReadonly"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "Mathematical Symbols",
+        "properties": {
+          "mathematicalSymbols.minimumCompletionLength": {
+            "title": "minimum length of editor completion",
+            "type": "number",
+            "default": 3,
+            "description": "Set a negative value to disable completion."
+          },
+          "mathematicalSymbols.useCache": {
+            "title": "Use Symbol Table Cache",
+            "type": "boolean",
+            "default": true,
+            "description": "Specify whether to use caching for symbol tables."
+          },
+          "mathematicalSymbols.enabledLanguages": {
+            "title": "Enabled Languages",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [
+              "plaintext",
+              "markdown",
+              "typst"
+            ],
+            "description": "Specify the languages where the extension is enabled by default."
+          }
+        }
       }
     ]
   },
@@ -23,9 +90,7 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
-    "lint": "eslint src",
-    "test": "vscode-test"
+    "lint": "eslint src"
   },
   "devDependencies": {
     "@types/vscode": "^1.95.0",
@@ -34,8 +99,6 @@
     "@typescript-eslint/eslint-plugin": "^8.10.0",
     "@typescript-eslint/parser": "^8.7.0",
     "eslint": "^9.13.0",
-    "typescript": "^5.6.3",
-    "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1"
+    "typescript": "^5.6.3"
   }
 }
