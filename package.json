@@ -4,6 +4,11 @@
   "description": "Insertion support of mathematical symbols ∈ 𝕌nicode",
   "version": "0.0.1",
   "license": "MIT",
+  "publisher": "ho-oto",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ho-oto/mathematical-symbols"
+  },
   "homepage": "https://github.com/ho-oto/mathematical-symbols",
   "engines": {
     "vscode": "^1.95.0"
